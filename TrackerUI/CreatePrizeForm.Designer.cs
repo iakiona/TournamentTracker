@@ -91,10 +91,11 @@ namespace TrackerUI
             // 
             // prizeAmountValue
             // 
-            this.prizeAmountValue.Location = new System.Drawing.Point(236, 193);
+            this.prizeAmountValue.Location = new System.Drawing.Point(236, 194);
             this.prizeAmountValue.Name = "prizeAmountValue";
             this.prizeAmountValue.Size = new System.Drawing.Size(243, 35);
             this.prizeAmountValue.TabIndex = 18;
+            this.prizeAmountValue.Text = "0";
             // 
             // prizeAmountLabel
             // 
@@ -113,6 +114,7 @@ namespace TrackerUI
             this.prizeAmountPercentageValue.Name = "prizeAmountPercentageValue";
             this.prizeAmountPercentageValue.Size = new System.Drawing.Size(243, 35);
             this.prizeAmountPercentageValue.TabIndex = 20;
+            this.prizeAmountPercentageValue.Text = "0";
             // 
             // prizeAmountPercentageLabel
             // 
@@ -150,6 +152,7 @@ namespace TrackerUI
             this.createPrizeButton.TabIndex = 26;
             this.createPrizeButton.Text = "Create Prize";
             this.createPrizeButton.UseVisualStyleBackColor = true;
+            this.createPrizeButton.Click += new System.EventHandler(this.createPrizeButton_Click);
             // 
             // CreatePrizeForm
             // 
