@@ -20,10 +20,12 @@ namespace TrackerLibrary.DataAccess
             model.Id = currentId;
             // add the new record with the new id (max + 1)
             prizes.Add(model);
-                        
+
             // convert the prizes to a list<string>
             // save a list<string> to the text file
+            prizes.SaveToPrizeFile(PrizesFile);
 
+            return model;
         }
     }
 }
