@@ -10,7 +10,7 @@ using TrackerLibrary.Models;
 
 namespace TrackerUI
 {
-    public partial class CreateTournamentForm : Form
+    public partial class CreateTournamentForm : Form, IPrizeRequester, ITeamRequester
     {
         List<TeamModel> availableTeams = GlobalConfig.Connection.GetTeam_All();
         List<TeamModel> selectedTeams = new List<TeamModel>();
@@ -18,10 +18,10 @@ namespace TrackerUI
         public CreateTournamentForm()
         {
             InitializeComponent();
-            InitializeLists();
+            WireUpLists();
         }
 
-        private void InitializeLists()
+        private void WireUpLists()
         {
             selectTeamDropDown.DataSource = null;
             selectTeamDropDown.DataSource = availableTeams;
@@ -29,6 +29,7 @@ namespace TrackerUI
             tournamentTeamsListBox.DataSource = null;
             tournamentTeamsListBox.DataSource = selectedTeams;
             tournamentTeamsListBox.DisplayMember = "TeamName";
+            prizesListBox.DataSource = null;
             prizesListBox.DataSource = selectedPrizes;
             prizesListBox.DisplayMember = "PlaceName";
         }
@@ -41,7 +42,35 @@ namespace TrackerUI
             {
                 availableTeams.Remove(t);
                 selectedTeams.Add(t);
+                WireUpLists();
             }
+        }
+
+        private void createPrizeButton_Click(object sender, EventArgs e)
+        {
+            //call the createprize form
+            CreatePrizeForm frm = new CreatePrizeForm(this);
+            frm.Show();
+        }
+
+        public void PrizeComplete(PrizeModel model)
+        {
+            //get bac from the form a prize model
+            //take the prizemodel and put in into our list of seleced prizes
+            selectedPrizes.Add(model);
+            WireUpLists();
+        }
+
+        public void TeamComplete(TeamModel model)
+        {
+            selectedTeams.Add(model);
+            WireUpLists();
+        }
+
+        private void createNewTeamLink_LinkClicked(object sender, LinkLabelLinkClickedEventArgs e)
+        {
+            CreateTeamForm frm = new CreateTeamForm(this);
+            frm.Show();
         }
     }
 }
