@@ -193,6 +193,7 @@ namespace TrackerUI
             this.deleteSelectedPlayersButton.TabIndex = 20;
             this.deleteSelectedPlayersButton.Text = "Delete";
             this.deleteSelectedPlayersButton.UseVisualStyleBackColor = true;
+            this.deleteSelectedPlayersButton.Click += new System.EventHandler(this.deleteSelectedPlayersButton_Click);
             // 
             // deleteSelectedPrizeButton
             // 
@@ -208,6 +209,7 @@ namespace TrackerUI
             this.deleteSelectedPrizeButton.TabIndex = 23;
             this.deleteSelectedPrizeButton.Text = "Delete";
             this.deleteSelectedPrizeButton.UseVisualStyleBackColor = true;
+            this.deleteSelectedPrizeButton.Click += new System.EventHandler(this.deleteSelectedPrizeButton_Click);
             // 
             // label1
             // 
