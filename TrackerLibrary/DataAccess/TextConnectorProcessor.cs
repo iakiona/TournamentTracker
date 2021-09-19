@@ -175,7 +175,7 @@ namespace TrackerLibrary.DataAccess.TextHelpers
                     { ConvertPrizeListToString(tm.Prizes) },
                     { ConvertRoundListToString(tm.Rounds) }");
             }
-            File.WriteAllLines(fileName.FullFilePath(), lines)
+            File.WriteAllLines(fileName.FullFilePath(), lines);
         }
         private static string ConvertRoundListToString(List<List<MatchupModel>> rounds)
         {
