@@ -90,7 +90,7 @@ namespace TrackerLibrary.DataAccess
                 currentid = tournaments.OrderByDescending(x => x.Id).First().Id + 1;
             }
             model.Id = currentid;
-            model.SaveRoundsToFile(model, MatchupFile, MatchupEntryFile);
+            model.SaveRoundsToFile(MatchupFile, MatchupEntryFile);
             tournaments.Add(model);
             tournaments.SaveToTournamentFile(TournamentFile);
         }
