@@ -77,6 +77,7 @@ namespace TrackerUI
             this.loadExistingTournamentButton.TabIndex = 31;
             this.loadExistingTournamentButton.Text = "Load Tournament";
             this.loadExistingTournamentButton.UseVisualStyleBackColor = true;
+            this.loadExistingTournamentButton.Click += new System.EventHandler(this.loadExistingTournamentButton_Click);
             // 
             // loadExistingTournamentDropDown
             // 
