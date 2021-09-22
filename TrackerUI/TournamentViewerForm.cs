@@ -67,16 +67,18 @@ namespace TrackerUI
                 {
                     foreach (MatchupModel m in matchups)
                     {
-                        selectedMatchups.Add(m);
+                        if (m.Winner == null || !unplayedOnlyCheckbox.Checked)
+                        {
+                            selectedMatchups.Add(m); 
+                        }
                     }
                 }
             }
+            LoadMatchup(selectedMatchups.First());
       
         }
-        private void LoadMatchup()
+        private void LoadMatchup(MatchupModel m)
         {
-            MatchupModel m = (MatchupModel)matchupListBox.SelectedItem;
-
             for (int i = 0; i < m.Entries.Count; i++)
             {
                 if (i == 0)
@@ -113,7 +115,55 @@ namespace TrackerUI
         }
         private void matchupListBox_SelectedIndexChanged(object sender, EventArgs e)
         {
-            LoadMatchup();
+            LoadMatchup((MatchupModel)matchupListBox.SelectedItem);
+        }
+
+        private void unplayedOnlyCheckbox_CheckedChanged(object sender, EventArgs e)
+        {
+            LoadMatchups((int)roundDropDown.SelectedItem);
+        }
+
+        private void scoreButton_Click(object sender, EventArgs e)
+        {
+            MatchupModel m = (MatchupModel)matchupListBox.SelectedItem;
+            for (int i = 0; i < m.Entries.Count; i++)
+            {
+                if (i == 0)
+                {
+                    if (m.Entries[0].TeamCompeting != null)
+                    {
+                       
+                        bool scoreValid = double.TryParse(teamOneScoreValue.Text, out double scoreVal);
+                        if (scoreValid)
+                        {
+                            m.Entries[0].Score = scoreVal; 
+                        }
+                        else
+                        {
+                            MessageBox.Show("Please enter a valid score for team 1.");
+                            return;
+                        }
+                    }
+    
+                }
+                if (i == 1)
+                {
+                    if (m.Entries[1].TeamCompeting != null)
+                    {
+                    
+                        bool scoreValid = double.TryParse(teamTwoScoreValue.Text, out double scoreVal);
+                        if (scoreValid)
+                        {
+                            m.Entries[1].Score = scoreVal;
+                        }
+                        else
+                        {
+                            MessageBox.Show("Please enter a valid score for team 2.");
+                            return;
+                        }
+                    }
+                }
+            }
         }
     }
 }
