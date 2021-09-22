@@ -14,14 +14,14 @@ namespace TrackerUI
     public partial class TournamentViewerForm : Form
     {
         private TournamentModel tournament;
-        List<int> rounds = new List<int>();
-        List<MatchupModel> selectedMatchups = new List<MatchupModel>();
-        BindingSource matchupsBinding = new BindingSource();
-        BindingSource roundsBinding = new BindingSource();
+        BindingList<int> rounds = new BindingList<int>();
+        BindingList<MatchupModel> selectedMatchups = new BindingList<MatchupModel>();
+
         public TournamentViewerForm(TournamentModel tournamentModel)
         {
             InitializeComponent();
             tournament = tournamentModel;
+            WireUpLists();
             LoadFormData();
             LoadRounds();
         }
@@ -29,23 +29,16 @@ namespace TrackerUI
         {
             tournamentName.Text = tournament.TournamentName;
         }
-        private void WireUpRoundsLists()
+        private void WireUpLists()
         {
-            //roundDropDown.DataSource = null;
-            roundsBinding.DataSource = rounds;
-            roundDropDown.DataSource = roundsBinding;
-        }
-        private void WireUpMatchupsLists()
-        {
-
-            //matchupListBox.DataSource = null;
-            matchupsBinding.DataSource = selectedMatchups;
-            matchupListBox.DataSource = matchupsBinding;
+            roundDropDown.DataSource = rounds;
+            matchupListBox.DataSource = selectedMatchups;
             matchupListBox.DisplayMember = "DisplayName";
         }
         private void LoadRounds()
         {
-            rounds = new List<int>();
+
+            rounds.Clear();
             rounds.Add(1);
             int currRound = 1;
 
@@ -57,25 +50,28 @@ namespace TrackerUI
                     rounds.Add(currRound);
                 }
             }
-            roundsBinding.ResetBindings(false);
-            //WireUpRoundsLists();
+
+            LoadMatchups(1);
+
         }
 
         private void roundDropDown_SelectedIndexChanged(object sender, EventArgs e)
         {
-            LoadMatchups();
+            LoadMatchups((int)roundDropDown.SelectedItem);
         }
-        private void LoadMatchups()
+        private void LoadMatchups(int round)
         {
-            int round = (int)roundDropDown.SelectedItem;
             foreach (List<MatchupModel> matchups in tournament.Rounds)
             {
                 if (matchups.First().MatchupRound == round)
                 {
-                    selectedMatchups = matchups;
+                    foreach (MatchupModel m in matchups)
+                    {
+                        selectedMatchups.Add(m);
+                    }
                 }
             }
-            matchupsBinding.ResetBindings(false);
+      
         }
         private void LoadMatchup()
         {
