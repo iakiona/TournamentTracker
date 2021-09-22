@@ -66,6 +66,7 @@ namespace TrackerUI
             {
                 if (matchups.First().MatchupRound == round)
                 {
+                    selectedMatchups.Clear();
                     foreach (MatchupModel m in matchups)
                     {
                         if (m.Winner == null || !unplayedOnlyCheckbox.Checked)
