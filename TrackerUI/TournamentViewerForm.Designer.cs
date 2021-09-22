@@ -133,6 +133,7 @@ namespace TrackerUI
             this.teamOneScoreLabel.Size = new System.Drawing.Size(82, 37);
             this.teamOneScoreLabel.TabIndex = 7;
             this.teamOneScoreLabel.Text = "Score";
+            //this.teamOneScoreLabel.Click += new System.EventHandler(this.teamOneScoreLabel_Click);
             // 
             // teamOneScoreValue
             // 
