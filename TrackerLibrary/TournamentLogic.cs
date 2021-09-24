@@ -24,7 +24,7 @@ namespace TrackerLibrary
             model.Rounds.Add(CreateFirstRound(byes, randomizedTeams));
 
             CreateOtherRounds(model, rounds);
-            UpdateTournamentResults(model);
+            //UpdateTournamentResults(model);
             
         }
         public static void UpdateTournamentResults(TournamentModel model)
@@ -54,54 +54,54 @@ namespace TrackerLibrary
         }
         public static void AlertUsersToNewRound(this TournamentModel model)
         {
-            int currentRoundNumber = model.CheckCurrentRound();
-            List<MatchupModel> currentRound = model.Rounds.Where(x => x.First().MatchupRound == currentRoundNumber).First();
-            foreach (MatchupModel matchup in currentRound)
-            {
-                foreach (MatchupEntryModel me in matchup.Entries)
-                {
-                    foreach (PersonModel p in me.TeamCompeting.TeamMembers)
-                    {
-                        AlertPersonToNewRound(p, me.TeamCompeting.TeamName, matchup.Entries.Where(x => x.TeamCompeting != me.TeamCompeting).FirstOrDefault());
-                    }
-                }
-            }
+            //int currentRoundNumber = model.CheckCurrentRound();
+            //List<MatchupModel> currentRound = model.Rounds.Where(x => x.First().MatchupRound == currentRoundNumber).First();
+            //foreach (MatchupModel matchup in currentRound)
+            //{
+            //    foreach (MatchupEntryModel me in matchup.Entries)
+            //    {
+            //        foreach (PersonModel p in me.TeamCompeting.TeamMembers)
+            //        {
+            //            AlertPersonToNewRound(p, me.TeamCompeting.TeamName, matchup.Entries.Where(x => x.TeamCompeting != me.TeamCompeting).FirstOrDefault());
+            //        }
+            //    }
+            //}
         }
 
         private static void AlertPersonToNewRound(PersonModel p, string teamName, MatchupEntryModel competitor)
         {
-            if (p.EmailAddress.Length == 0)
-            {
-                return;
-            }
+            //if (p.EmailAddress.Length == 0)
+            //{
+            //    return;
+            //}
            
-            List<string> to = new List<string>();
-            string subject = "";
+            //List<string> to = new List<string>();
+            //string subject = "";
  
-            StringBuilder body = new StringBuilder();
-            if (competitor != null)
-            {
-                subject = $"You have a new matchup with { competitor.TeamCompeting.TeamName }";
-                body.AppendLine("<h1>You have a new matchup</h1>");
-                body.Append("<strong>Competitor: </strong>");
-                body.AppendLine(competitor.TeamCompeting.TeamName);
-                body.AppendLine();
-                body.AppendLine();
-                body.AppendLine("Have a great time!");
-                body.AppendLine("~Tournament Tracker");
-            }
-            else
-            {
-                subject = "You have a bye week this round";
-                body.AppendLine("Enjoy your round off!");
-                body.AppendLine("~Tournament Tracker");
-            }
-            to.Add(p.EmailAddress);
+            //StringBuilder body = new StringBuilder();
+            //if (competitor != null)
+            //{
+            //    subject = $"You have a new matchup with { competitor.TeamCompeting.TeamName }";
+            //    body.AppendLine("<h1>You have a new matchup</h1>");
+            //    body.Append("<strong>Competitor: </strong>");
+            //    body.AppendLine(competitor.TeamCompeting.TeamName);
+            //    body.AppendLine();
+            //    body.AppendLine();
+            //    body.AppendLine("Have a great time!");
+            //    body.AppendLine("~Tournament Tracker");
+            //}
+            //else
+            //{
+            //    subject = "You have a bye week this round";
+            //    body.AppendLine("Enjoy your round off!");
+            //    body.AppendLine("~Tournament Tracker");
+            //}
+            //to.Add(p.EmailAddress);
       
-            EmailLogic.SendEmail(to.ToString(), subject, body.ToString());
+            //EmailLogic.SendEmail(to.ToString(), subject, body.ToString());
         }
 
-        private static int CheckCurrentRound(this TournamentModel model)
+        public static int CheckCurrentRound(this TournamentModel model)
         {
             int output = 1;
             foreach (List<MatchupModel> round in model.Rounds)
@@ -142,33 +142,33 @@ namespace TrackerLibrary
                     runnerUpPrize = secondPlacePrize.CalculatePrizePayout(totalIncome);
                 }
             }
-            string subject = "";
-            StringBuilder body = new StringBuilder();
-            subject = $"In { model.TournamentName }, {winners.TeamName } has won!";
-            body.AppendLine("<h1>We have a WINNER!</h1>");
-            body.AppendLine("<p>Congratulations to our winner on a great tournament.</p>");
-            body.AppendLine("</br>");
-            if (winnerPrize > 0)
-            {
-                body.AppendLine($"<p>{ winners.TeamName } will receive ${ winnerPrize }</p>");
-            }
-            if (runnerUpPrize > 0)
-            {
-                body.AppendLine($"< p >{  runnerUP.TeamName } will receive ${  runnerUpPrize }</p>");
-            }
-            body.AppendLine("<p>Thanks for a great tournament everyone!</p>");
-            body.AppendLine("~Tournament Tracker");
-            List<string> bccAddresses = new List<string>();
-            foreach (TeamModel t in model.EnteredTeams)
-            {
-                foreach (PersonModel p in t.TeamMembers)
-                {
-                    if (p.EmailAddress.Length > 0)
-                    {
-                        bccAddresses.Add(p.EmailAddress);
-                    }
-                }
-            }
+            //string subject = "";
+            //StringBuilder body = new StringBuilder();
+            //subject = $"In { model.TournamentName }, {winners.TeamName } has won!";
+            //body.AppendLine("<h1>We have a WINNER!</h1>");
+            //body.AppendLine("<p>Congratulations to our winner on a great tournament.</p>");
+            //body.AppendLine("</br>");
+            //if (winnerPrize > 0)
+            //{
+            //    body.AppendLine($"<p>{ winners.TeamName } will receive ${ winnerPrize }</p>");
+            //}
+            //if (runnerUpPrize > 0)
+            //{
+            //    body.AppendLine($"< p >{  runnerUP.TeamName } will receive ${  runnerUpPrize }</p>");
+            //}
+            //body.AppendLine("<p>Thanks for a great tournament everyone!</p>");
+            //body.AppendLine("~Tournament Tracker");
+            //List<string> bccAddresses = new List<string>();
+            //foreach (TeamModel t in model.EnteredTeams)
+            //{
+            //    foreach (PersonModel p in t.TeamMembers)
+            //    {
+            //        if (p.EmailAddress.Length > 0)
+            //        {
+            //            bccAddresses.Add(p.EmailAddress);
+            //        }
+            //    }
+            //}
             model.CompleteTournament();
           
         }
