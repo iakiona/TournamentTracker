@@ -305,6 +305,11 @@ namespace TrackerLibrary.DataAccess
                 }
             }
         }
+
+        public void CompleteTournament(TournamentModel model)
+        {
+            
+        }
     }
 }
 

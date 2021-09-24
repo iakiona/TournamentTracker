@@ -22,6 +22,7 @@ namespace TrackerUI
         {
             InitializeComponent();
             tournament = tournamentModel;
+            
             WireUpLists();
             LoadFormData();
             LoadRounds();

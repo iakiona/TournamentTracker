@@ -213,7 +213,7 @@ namespace TrackerLibrary.DataAccess.TextHelpers
                 int parentID = 0;
                 if (int.TryParse(cols[3], out parentID))
                 {
-                    me.ParentMatchup = LookupMatchupById(int.Parse(cols[3]));
+                    me.ParentMatchup = LookupMatchupById(parentID);
                 }
                 else
                 {

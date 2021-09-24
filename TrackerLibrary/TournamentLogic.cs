@@ -24,6 +24,7 @@ namespace TrackerLibrary
             model.Rounds.Add(CreateFirstRound(byes, randomizedTeams));
 
             CreateOtherRounds(model, rounds);
+            UpdateTournamentResults(model);
             
         }
         public static void UpdateTournamentResults(TournamentModel model)
@@ -48,10 +49,10 @@ namespace TrackerLibrary
             {
                 //Alert Users
                 // EmailLogic.SendEmail();
-                AlertUsersToNewRound(model);
+                model.AlertUsersToNewRound();
             }
         }
-        private static void AlertUsersToNewRound(this TournamentModel model)
+        public static void AlertUsersToNewRound(this TournamentModel model)
         {
             int currentRoundNumber = model.CheckCurrentRound();
             List<MatchupModel> currentRound = model.Rounds.Where(x => x.First().MatchupRound == currentRoundNumber).First();
@@ -109,9 +110,81 @@ namespace TrackerLibrary
                 {
                     output += 1;
                 }
+                else
+                {
+                    return output;
+                }
                 
             }
+            //tournament is complete
+            CompleteTournament(model);
+            return output - 1;
+        }
+
+        private static void CompleteTournament(TournamentModel model)
+        {
+            GlobalConfig.Connection.CompleteTournament(model);
+            TeamModel winners = model.Rounds.Last().First().Winner;
+            TeamModel runnerUP = model.Rounds.Last().First().Entries.Where(x => x.TeamCompeting != winners).First().TeamCompeting;
+            decimal winnerPrize = 0;
+            decimal runnerUpPrize = 0;
+            if (model.Prizes.Count > 0)
+            {
+                decimal totalIncome = model.EnteredTeams.Count * model.EntryFee;
+                PrizeModel firstPlacePrize = model.Prizes.Where(x => x.PlaceNumber == 1).FirstOrDefault();
+                PrizeModel secondPlacePrize = model.Prizes.Where(x => x.PlaceNumber == 2).FirstOrDefault();
+                if (firstPlacePrize != null)
+                {
+                    winnerPrize = firstPlacePrize.CalculatePrizePayout(totalIncome);
+                }
+                if (secondPlacePrize != null)
+                {
+                    runnerUpPrize = secondPlacePrize.CalculatePrizePayout(totalIncome);
+                }
+            }
+            string subject = "";
+            StringBuilder body = new StringBuilder();
+            subject = $"In { model.TournamentName }, {winners.TeamName } has won!";
+            body.AppendLine("<h1>We have a WINNER!</h1>");
+            body.AppendLine("<p>Congratulations to our winner on a great tournament.</p>");
+            body.AppendLine("</br>");
+            if (winnerPrize > 0)
+            {
+                body.AppendLine($"<p>{ winners.TeamName } will receive ${ winnerPrize }</p>");
+            }
+            if (runnerUpPrize > 0)
+            {
+                body.AppendLine($"< p >{  runnerUP.TeamName } will receive ${  runnerUpPrize }</p>");
+            }
+            body.AppendLine("<p>Thanks for a great tournament everyone!</p>");
+            body.AppendLine("~Tournament Tracker");
+            List<string> bccAddresses = new List<string>();
+            foreach (TeamModel t in model.EnteredTeams)
+            {
+                foreach (PersonModel p in t.TeamMembers)
+                {
+                    if (p.EmailAddress.Length > 0)
+                    {
+                        bccAddresses.Add(p.EmailAddress);
+                    }
+                }
+            }
+            model.CompleteTournament();
+          
+        }
+        private static decimal CalculatePrizePayout(this PrizeModel prize, decimal totalIncome)
+        {
+            decimal output = 0;
+            if (prize.PrizeAmount > 0)
+            {
+                output = prize.PrizeAmount;
+            }
+            else
+            {
+                output = Decimal.Multiply(totalIncome, Convert.ToDecimal(prize.PrizeAmount / 100));
+            }
             return output;
+
         }
         private static void AdvanceWinners(List<MatchupModel> models, TournamentModel tournament)
         {
