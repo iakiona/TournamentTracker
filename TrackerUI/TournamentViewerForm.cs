@@ -242,8 +242,8 @@ namespace TrackerUI
                     TournamentLogic.UpdateTournamentResults(tournament);
                     if (currentRound == lastRound)
                     {
-                        //TournamentResultForm form = new TournamentResultForm();
-                        //form.Show();
+                        TournamentResultForm form = new TournamentResultForm();
+                        form.Show();
                     }
                 }
                 catch (Exception ex)

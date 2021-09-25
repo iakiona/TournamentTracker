@@ -120,6 +120,11 @@ namespace TrackerLibrary
             CompleteTournament(model);
             return output - 1;
         }
+        public static string winnerTeam;
+        public static string runnerUpTeam;
+        public static string tournamentName;
+        public static string prizeWinner;
+        public static string prizeRunnerUp;
 
         private static void CompleteTournament(TournamentModel model)
         {
@@ -142,6 +147,11 @@ namespace TrackerLibrary
                     runnerUpPrize = secondPlacePrize.CalculatePrizePayout(totalIncome);
                 }
             }
+            winnerTeam = winners.TeamName;
+            runnerUpTeam = runnerUP.TeamName;
+            tournamentName = model.TournamentName;
+            prizeWinner = winnerPrize.ToString();
+            prizeRunnerUp = runnerUpPrize.ToString();
             //string subject = "";
             //StringBuilder body = new StringBuilder();
             //subject = $"In { model.TournamentName }, {winners.TeamName } has won!";
