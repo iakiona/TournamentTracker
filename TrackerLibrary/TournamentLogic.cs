@@ -50,7 +50,7 @@ namespace TrackerLibrary
                 //Alert Users
                 // EmailLogic.SendEmail();
                 model.AlertUsersToNewRound();
-            }
+             }
         }
         public static void AlertUsersToNewRound(this TournamentModel model)
         {
@@ -123,9 +123,9 @@ namespace TrackerLibrary
 
         private static void CompleteTournament(TournamentModel model)
         {
-            GlobalConfig.Connection.CompleteTournament(model);
+            //GlobalConfig.Connection.CompleteTournament(model);
             TeamModel winners = model.Rounds.Last().First().Winner;
-            TeamModel runnerUP = model.Rounds.Last().First().Entries.Where(x => x.TeamCompeting != winners).First().TeamCompeting;
+            TeamModel runnerUP = model.Rounds.Last().First().Entries.Where(x => x.TeamCompeting.Id != winners.Id).First().TeamCompeting;
             decimal winnerPrize = 0;
             decimal runnerUpPrize = 0;
             if (model.Prizes.Count > 0)
@@ -169,7 +169,7 @@ namespace TrackerLibrary
             //        }
             //    }
             //}
-            model.CompleteTournament();
+            //model.CompleteTournament();
           
         }
         private static decimal CalculatePrizePayout(this PrizeModel prize, decimal totalIncome)
@@ -198,7 +198,7 @@ namespace TrackerLibrary
                         {
                             if (me.ParentMatchup != null)
                             {
-                                if (me.ParentMatchupId == m.Id)
+                                if (me.ParentMatchup.Id == m.Id)
                                 {
                                     me.TeamCompeting = m.Winner;
                                     GlobalConfig.Connection.UpdateMatchup(rm);
