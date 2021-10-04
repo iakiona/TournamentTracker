@@ -10,7 +10,7 @@ namespace TrackerLibrary.Models
         /// The unique identifier for the person
         /// </summary>
         public int Id { get; set; }
-        public string FrstName { get; set; }
+        public string FirstName { get; set; }
         public string LastName { get; set; }
         public string EmailAddress { get; set; }
         public string CellphoneNumber { get; set; }
@@ -19,7 +19,7 @@ namespace TrackerLibrary.Models
         {
             get
             {
-                return $"{ FrstName } { LastName }";
+                return $"{ FirstName } { LastName }";
             }
         }
 

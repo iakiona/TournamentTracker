@@ -27,11 +27,11 @@ namespace TrackerUI
 
         private void CreateSampleData()
         {
-            availableTeamMembers.Add(new PersonModel { FrstName = "Tim", LastName = "Corey" });
-            availableTeamMembers.Add(new PersonModel { FrstName = "Sue", LastName = "Storm" });
+            availableTeamMembers.Add(new PersonModel { FirstName = "Tim", LastName = "Corey" });
+            availableTeamMembers.Add(new PersonModel { FirstName = "Sue", LastName = "Storm" });
 
-            selectedTeamMembers.Add(new PersonModel { FrstName = "Jane", LastName = "Smith" });
-            selectedTeamMembers.Add(new PersonModel { FrstName = "Bill", LastName = "Jones" });
+            selectedTeamMembers.Add(new PersonModel { FirstName = "Jane", LastName = "Smith" });
+            selectedTeamMembers.Add(new PersonModel { FirstName = "Bill", LastName = "Jones" });
         }
         private void WireUpLists()
         {
@@ -48,7 +48,7 @@ namespace TrackerUI
             {
                 PersonModel p = new PersonModel();
 
-                p.FrstName = firstNameValue.Text;
+                p.FirstName = firstNameValue.Text;
                 p.LastName = lastNameValue.Text;
                 p.EmailAddress = emailValue.Text;
                 p.CellphoneNumber = cellPhoneValue.Text;
