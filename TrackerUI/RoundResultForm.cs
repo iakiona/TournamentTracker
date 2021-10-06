@@ -24,8 +24,8 @@ namespace TrackerUI
             WireUpLists();
             LoadFormData();
             //LoadRounds();
-            LoadMatchups(1);
-            LoadMatchups(2);
+            LoadMatchups();
+         
         }
         private void Tournament_OnTournamentComplete(object sender, DateTime e)
         {
@@ -63,97 +63,85 @@ namespace TrackerUI
         {
         
         }
-        private void LoadMatchups(int round)
+        private void LoadMatchups()
         {
             foreach (List<MatchupModel> matchups in tournament.Rounds)
             {
-                if (matchups.First().MatchupRound == round)
-                {
-                    selectedMatchups.Clear();
-                    int count = round;
+            
                     foreach (MatchupModel m in matchups)
                     {
                         
                         
                         selectedMatchups.Add(m);
-                        LoadMatchup(m, count);
-                        count = count * 3;
+                        LoadMatchup(m);
+                        
                     }
-                }
+                
             }
             
 
 
         }
 
-        private void LoadMatchup(MatchupModel m, int count)
+        private void LoadMatchup(MatchupModel m)
         {
             if (m != null)
             {
                 for (int i = 0; i < m.Entries.Count; i++)
                 {
-                    if (count == 1)
+                    if (m.Winner != null)
                     {
-                        if (m.Entries[0].TeamCompeting != null)
+                        if (m.MatchupRound == 1 && m.Entries.Count == 1)
                         {
-                            teamOneName.Text = m.Entries[0].TeamCompeting.TeamName;
-                            teamOneScoreValue.Text = m.Entries[0].Score.ToString();
+                            if (m.Entries[0].TeamCompeting != null)
+                            {
+                                teamOneName.Text = m.Entries[0].TeamCompeting.TeamName;
+                                teamOneScoreValue.Text = m.Entries[0].Score.ToString();
 
-                            teamTwoName.Text = "<bye>";
-                            teamTwoScoreValue.Text = "";
+                                teamTwoName.Text = "<bye>";
+                                teamTwoScoreValue.Text = "";
+                            }
+                            else
+                            {
+                                teamOneName.Text = "Not Yet Set";
+                                teamOneScoreValue.Text = "";
+                            }
                         }
-                        else
+                        if (m.MatchupRound == 1 && m.Entries.Count == 2)
                         {
-                            teamOneName.Text = "Not Yet Set";
-                            teamOneScoreValue.Text = "";
+                            if (m.Entries[0].TeamCompeting != null)
+                            {
+                                team1Name.Text = m.Entries[0].TeamCompeting.TeamName;
+                                team1ScoreValue.Text = m.Entries[0].Score.ToString();
+                                team2Name.Text = m.Entries[1].TeamCompeting.TeamName;
+                                team2ScoreValue.Text = m.Entries[1].Score.ToString();
+                            }
+                            else
+                            {
+                                team1Name.Text = "Not Yet Set";
+                                team1ScoreValue.Text = "";
+                            }
                         }
-                    }
-                    if (count == 3)
-                    {
-                        if (m.Entries[0].TeamCompeting != null)
+                        if (m.MatchupRound == 2)
                         {
-                            team1Name.Text = m.Entries[0].TeamCompeting.TeamName;
-                            team1ScoreValue.Text = m.Entries[0].Score.ToString();
-                            team2Name.Text = m.Entries[1].TeamCompeting.TeamName;
-                            team2ScoreValue.Text = m.Entries[1].Score.ToString();
-                        }
-                        else
-                        {
-                            team1Name.Text = "Not Yet Set";
-                            team1ScoreValue.Text = "";
-                        }
-                    }
-                    if (count == 2)
-                    {
-                        if (m.Entries[1].TeamCompeting != null)
-                        {
-                            leftWinner.Text = m.Entries[0].TeamCompeting.TeamName;
-                            leftWinnerScoreValue.Text = m.Entries[0].Score.ToString();
-                            rightWinner.Text = m.Entries[1].TeamCompeting.TeamName;
-                            rightWinnerScoreValue.Text = m.Entries[1].Score.ToString();
+                            if (m.Entries[1].TeamCompeting != null)
+                            {
+                                leftWinner.Text = m.Entries[0].TeamCompeting.TeamName;
+                                leftWinnerScoreValue.Text = m.Entries[0].Score.ToString();
+                                rightWinner.Text = m.Entries[1].TeamCompeting.TeamName;
+                                rightWinnerScoreValue.Text = m.Entries[1].Score.ToString();
 
-                        }
-                        else
-                        {
-                            leftWinner.Text = m.Entries[0].TeamCompeting.TeamName;
-                            leftWinnerScoreValue.Text = m.Entries[0].Score.ToString();
-                            rightWinner.Text = "Not Yet Set";
-                            rightWinnerScoreValue.Text = "";
-                        }
+                            }
+                            else
+                            {
+                                leftWinner.Text = m.Entries[0].TeamCompeting.TeamName;
+                                leftWinnerScoreValue.Text = m.Entries[0].Score.ToString();
+                                rightWinner.Text = "Not Yet Set";
+                                rightWinnerScoreValue.Text = "";
+                            }
+                        } 
                     }
-                    if (count == 6)
-                    {
-                        if (m.Entries[3].TeamCompeting != null)
-                        {
-                            team2Name.Text = m.Entries[3].TeamCompeting.TeamName;
-                            team2ScoreValue.Text = m.Entries[3].Score.ToString();
-                        }
-                        else
-                        {
-                            team2Name.Text = "Not Yet Set";
-                            team2ScoreValue.Text = "";
-                        }
-                    }
+        
                 }
             }
 

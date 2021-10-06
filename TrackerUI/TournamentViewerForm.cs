@@ -234,8 +234,7 @@ namespace TrackerUI
                             teamOneScoreValue = null;
                         }
                     }
-                    RoundResultForm frm = new RoundResultForm(tournament);
-                    frm.Show();
+             
                 }
                 try
                 {
