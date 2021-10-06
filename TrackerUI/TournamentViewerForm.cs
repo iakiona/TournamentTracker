@@ -234,6 +234,8 @@ namespace TrackerUI
                             teamOneScoreValue = null;
                         }
                     }
+                    RoundResultForm frm = new RoundResultForm(tournament);
+                    frm.Show();
                 }
                 try
                 {
@@ -244,6 +246,8 @@ namespace TrackerUI
                     {
                         TournamentResultForm form = new TournamentResultForm();
                         form.Show();
+                        RoundResultForm frm = new RoundResultForm(tournament);
+                        frm.Show();
                     }
                 }
                 catch (Exception ex)
